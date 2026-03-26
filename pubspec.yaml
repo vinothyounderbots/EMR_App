@@ -1,0 +1,50 @@
+name: emr_application
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter_zoom_videosdk: ^1.7.0
+  dart_jsonwebtoken: ^2.12.1
+  file_picker: ^10.3.8
+  flutter:
+    sdk: flutter
+  image_picker: ^1.2.1
+  intl: ^0.20.2
+  shared_preferences: ^2.2.2
+  flutter_svg: ^2.0.10+1
+  url_launcher: ^6.3.2
+  camera: ^0.11.0+2
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.1
+  http: ^1.6.0
+  record: ^6.1.2
+  path: ^1.9.0
+  audioplayers: ^6.1.0
+  open_filex: ^4.7.0
+  provider: ^6.1.5+1
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_logo.png"
+  remove_alpha_ios: true
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/

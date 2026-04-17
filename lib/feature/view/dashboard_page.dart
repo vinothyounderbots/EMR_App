@@ -37,7 +37,6 @@ class _DashboardPageState extends State<DashboardPage> {
     loadProfile();
   }
 
-
   Future<void> loadProfile() async {
     final profileData = await SharedPreferencesHelper.getPatientDetails();
     if (profileData != null) {
@@ -50,23 +49,22 @@ class _DashboardPageState extends State<DashboardPage> {
       print("No profile data found.");
     }
   }
+
   PatientModel? patient;
 
   List<Widget> _pages() => [
-    HomeScreen(patient : patient),
-    const ConsultationsScreen(),
-    const ChatPage(),
-    const ReportsScreen(),
-    ProfilePage(patient : patient),
-  ];
+        HomeScreen(patient: patient),
+        const ConsultationsScreen(),
+        const ChatPage(),
+        const ReportsScreen(),
+        ProfilePage(patient: patient),
+      ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +88,6 @@ class HomeScreen extends StatefulWidget {
 // Posted by Josh
 // Retrieved 2026-03-14, License - CC BY-SA 4.0
 
-
   const HomeScreen({super.key, this.patient});
   // const HomeScreen({super.key});
   @override
@@ -98,12 +95,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String message = DateTime.now().hour < 12 ? "Good morning" : "Good afternoon";
+  final String message =
+      DateTime.now().hour < 12 ? "Good morning" : "Good afternoon";
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
+        // backgroundColor: const Color(0xFFF4F9FF),
+        backgroundColor: AppColors.background,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
@@ -129,16 +127,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       CustomText(
-                        // text: "Good morning,",
-                        text:message,
-                        color: AppColors.greyDark,
-                        fontSize: 16,
+                      CustomText(
+                        text: message,
+                        color: const Color(0xFF6B7A90),
+                        fontSize: 14,
                       ),
                       CustomText(
                         text: widget.patient?.name ?? "Patient Name",
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontSize: 20,
+                        color: const Color(0xFF1A2C44),
                       ),
                     ],
                   ),
@@ -176,21 +174,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Container(
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: AppColors.primaryGradient,
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      // colors: [Color(0xFF3A8DFF), Color(0xFF4CD7A5)],
+                      colors: [
+                        Color(0xFF2563EB),
+                        Color(0xFF10B981),
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(22),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.3),
+                        color: const Color(0xFF000000).withValues(alpha: 0.06),
                         blurRadius: 20,
-                        offset: const Offset(0, 10),
+                        offset: const Offset(0, 6),
                       ),
                     ],
                   ),
                   margin: const EdgeInsets.only(bottom: 24),
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(18),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -204,14 +206,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: "Next Appointment",
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
-                                color: Colors.white70,
+                                color: Color(0xFFE6F4FF),
                               ),
                               8.height,
                               CustomText(
                                 text: displayAppointment['doctorName'] ??
                                     "Doctor",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                               4.height,
@@ -219,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: "Cardiologist",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: Colors.white70,
+                                color: Color(0xFFE6F4FF),
                               ),
                             ],
                           ),
@@ -255,11 +257,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppButton(
                         text: "Join Call",
                         height: 48,
-                        borderRadius: 14,    
+                        borderRadius: 14,
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        textColor: AppColors.primary,
+                        textColor: const Color(0xFF3A8DFF),
                         color: Colors.white,
+                        // color: AppColors.primary,
+                        // textColor: Colors.white,
                         onPressed: () =>
                             Navigator.pushNamed(context, '/zoom_meeting'),
                       ),
@@ -270,9 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const CustomText(
               text: "Quick Actions",
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               fontSize: 18,
-              color: AppColors.black,
+              color: Color(0xFF1A2C44),
             ),
             10.height,
             Row(
@@ -353,9 +357,9 @@ class _HomeScreenState extends State<HomeScreen> {
             20.height,
             const CustomText(
               text: "Recent Updates",
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               fontSize: 18,
-              color: AppColors.black,
+              color: Color(0xFF1A2C44),
             ),
             8.height,
             GestureDetector(
@@ -408,57 +412,109 @@ class _HomeScreenState extends State<HomeScreen> {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
-        child: Card(
-          elevation: 2,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: bgColor.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          // decoration: BoxDecoration(
+          //   color: const Color(0xFFFFFFFF),
+          //   borderRadius: BorderRadius.circular(20),
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: const Color(0xFF000000).withValues(alpha: 0.06),
+          //       blurRadius: 20,
+          //       offset: const Offset(0, 6),
+          //     ),
+          //   ],
+          // ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 12,
+                offset: Offset(0, 6),
+              ),
+            ],
+          ),
+          child: 
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Container(
+          //       // padding: const EdgeInsets.only(left: 2, top: 10, right: 4),
+          //       padding: const EdgeInsets.all(8),
+          //       decoration: BoxDecoration(
+          //         color: AppColors.background,
+          //         borderRadius: BorderRadius.circular(12),
+          //       ),
+          //       child: Image.asset(
+          //         iconPath,
+          //         width: 20,
+          //         height: 20,
+          //         errorBuilder: (context, error, stackTrace) => const Icon(
+          //           Icons.category_rounded,
+          //           // color: Color(0xFF3A8DFF),
+          //           color: AppColors.blueLight,
+          //         ),
+          //       ),
+          //     ),
+          //     // 16.height,
+          //     Padding(
+          //       padding: const EdgeInsets.only(left: 5),
+          //       child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             CustomText(
+          //               text: title,
+          //               fontWeight: FontWeight.w600,
+          //               fontSize: 15,
+          //               color: const Color(0xFF1A2C44),
+          //             ),
+          //             4.height,
+          //             CustomText(
+          //               text: subtitle,
+          //               color: const Color(0xFF6B7A90),
+          //               fontWeight: FontWeight.w400,
+          //               fontSize: 12,
+          //             ),
+          //           ]),
+          //     ),
+          //   ],
+          // ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                // decoration: BoxDecoration(
+                //   color: const Color(0xFFEEF6FF),
+                //   borderRadius: BorderRadius.circular(12),
+                // ),
+                child: Image.asset(
+                  iconPath,
+                  width: 26,
+                  height: 26,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.category_rounded,
+                    color: Color(0xFF3A8DFF),
                   ),
-                  child: Image.asset(
-                    iconPath,
-                    width: 24,
-                    height: 24,
-                    errorBuilder: (context, error, stackTrace) => Icon(
-                      Icons.category_rounded,
-                      color: bgColor,
-                    ),
-                  ),
                 ),
-                16.height,
-                CustomText(
-                  text: title,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: AppColors.black,
-                ),
-                4.height,
-                CustomText(
-                  text: subtitle,
-                  color: AppColors.greyDark,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                ),
-              ],
-            ),
+              ),
+              16.height,
+              CustomText(
+                text: title,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                color: const Color(0xFF1A2C44),
+              ),
+              4.height,
+              CustomText(
+                text: subtitle,
+                color: const Color(0xFF6B7A90),
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+              ),
+            ],
           ),
         ),
       ),
@@ -474,23 +530,43 @@ class _HomeScreenState extends State<HomeScreen> {
   ) {
     return Card(
       elevation: 2,
+      color: AppColors.white,
+      shadowColor: AppColors.greenLight,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+        // decoration: BoxDecoration(
+        //   color: const Color(0xFFFFFFFF),
+        //   borderRadius: BorderRadius.circular(18),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: const Color(0xFF000000).withValues(alpha: 0.06),
+        //       blurRadius: 20,
+        //       offset: const Offset(0, 6),
+        //     ),
+        //   ],
+        // ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: bgColor,
-                borderRadius: BorderRadius.circular(10),
+              width: 44,
+              height: 44,
+              // decoration: BoxDecoration(
+              //   color: const Color(0xFFEAF4FF),
+              //   borderRadius: BorderRadius.circular(12),
+              // ),
+              child: Center(
+                child: Image.asset(
+                  iconPath,
+                  width: 24,
+                  height: 24,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.notifications,
+                    color: Color(0xFF3A8DFF),
+                    size: 20,
+                  ),
+                ),
               ),
-              child: Center(child: Image.asset(iconPath, width: 20, height: 20)),
             ),
             12.width,
             Expanded(
@@ -499,20 +575,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CustomText(
                     text: title,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
+                    color: const Color(0xFF1A2C44),
                   ),
                   4.height,
                   CustomText(
                     text: subtitle,
-                    color: AppColors.verydarkgrayishblue,
+                    color: const Color(0xFF6B7A90),
                     fontSize: 12,
                   ),
                   4.height,
                   CustomText(
                     text: date,
-                    color: AppColors.greyMedium,
-                    fontSize: 12,
+                    color: const Color(0xFF6B7A90),
+                    fontSize: 11,
                   ),
                 ],
               ),

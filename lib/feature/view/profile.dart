@@ -100,11 +100,11 @@ class _ProfilePageState extends State<ProfilePage> {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.greyBorder),
-          ),
+          // decoration: BoxDecoration(
+          //   color: AppColors.white,
+          //   borderRadius: BorderRadius.circular(8),
+          //   border: Border.all(color: AppColors.greyBorder),
+          // ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
